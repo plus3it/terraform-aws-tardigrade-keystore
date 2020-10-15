@@ -32,7 +32,7 @@ Terraform module to create a keystore within S3/SSM
 
 | Name | Description |
 |------|-------------|
-| bucket\_objects | List of buckey objects created by the keystore module |
+| bucket\_objects | List of bucket objects created by the keystore module |
 | ssm\_parameters | List of ssm parameter objects created by the keystore module |
 
 <!-- END TFDOCS -->
