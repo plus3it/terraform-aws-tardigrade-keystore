@@ -26,3 +26,7 @@ module "create_s3_keystore" {
   }
   bucket_name = aws_s3_bucket.this.id
 }
+
+output keystore {
+  value = module.create_s3_keystore
+}

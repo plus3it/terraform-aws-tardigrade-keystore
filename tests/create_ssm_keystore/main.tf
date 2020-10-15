@@ -11,7 +11,7 @@ resource "aws_kms_key" "this" {
   description = random_id.this.hex
 }
 
-module "create_s3_keystore" {
+module "create_ssm_keystore" {
   source = "../../"
   providers = {
     aws = aws
@@ -26,4 +26,8 @@ module "create_s3_keystore" {
   }
   kms_key_id  = aws_kms_key.this.arn
   bucket_name = random_id.this.hex
+}
+
+output keystore {
+  value = module.create_ssm_keystore
 }
