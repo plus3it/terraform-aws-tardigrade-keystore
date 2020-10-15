@@ -21,6 +21,8 @@ No input.
 
 ## Outputs
 
-No output.
+| Name | Description |
+|------|-------------|
+| keystore | n/a |
 
 <!-- END TFDOCS -->
