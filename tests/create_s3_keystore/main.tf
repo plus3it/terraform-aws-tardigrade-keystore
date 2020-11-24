@@ -2,16 +2,16 @@ provider aws {
   region = "us-east-1"
 }
 
-resource "random_id" "this" {
+resource random_id this {
   byte_length = 8
   prefix      = "tardigrade-keystore-"
 }
 
-resource "aws_s3_bucket" "this" {
+resource aws_s3_bucket this {
   bucket = random_id.this.hex
 }
 
-module "create_s3_keystore" {
+module create_s3_keystore {
   source = "../../"
   providers = {
     aws = aws
