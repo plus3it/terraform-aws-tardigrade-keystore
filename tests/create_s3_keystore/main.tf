@@ -17,8 +17,7 @@ module "create_s3_keystore" {
     aws = aws
   }
 
-  create_keystore = true
-  backend         = "s3"
+  backend = "s3"
   key_value_map = {
     "alpha" = "alpha",
     "beta"  = "beta",

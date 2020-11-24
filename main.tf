@@ -1,6 +1,3 @@
-provider "aws" {
-}
-
 locals {
   keys = keys(var.key_value_map)
 

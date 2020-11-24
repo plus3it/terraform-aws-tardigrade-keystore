@@ -1,9 +1,3 @@
-variable "create_keystore" {
-  description = "Controls whether to create the keystore"
-  type        = bool
-  default     = true
-}
-
 variable "bucket_name" {
   description = "Name of the keystore S3 bucket, must already exist. For SSM Parameter, bucket name will be used as prefix for the parameter names"
   type        = string

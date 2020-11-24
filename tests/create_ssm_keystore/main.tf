@@ -17,8 +17,7 @@ module "create_ssm_keystore" {
     aws = aws
   }
 
-  create_keystore = true
-  backend         = "ssm"
+  backend = "ssm"
   key_value_map = {
     "alpha" = "alpha",
     "beta"  = "beta",
