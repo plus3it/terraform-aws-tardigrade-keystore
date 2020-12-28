@@ -9,7 +9,7 @@ locals {
   is_backend_valid = contains(local.backends, var.backend)
 }
 
-resource null_resource is_backend_valid {
+resource "null_resource" "is_backend_valid" {
   # forces/outputs an error when var.backend is invalid
   count = local.is_backend_valid ? 1 : 0
 
@@ -18,7 +18,7 @@ resource null_resource is_backend_valid {
   }
 }
 
-resource aws_s3_bucket_object this {
+resource "aws_s3_bucket_object" "this" {
   for_each = var.backend == "s3" ? var.key_value_map : {}
 
   bucket       = var.bucket_name
@@ -29,7 +29,7 @@ resource aws_s3_bucket_object this {
   tags         = var.tags
 }
 
-resource aws_ssm_parameter this {
+resource "aws_ssm_parameter" "this" {
   for_each = var.backend == "ssm" ? var.key_value_map : {}
 
   type   = "SecureString"
