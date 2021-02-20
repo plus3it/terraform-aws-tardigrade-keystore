@@ -4,6 +4,50 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+### 3.0.0
+
+**Released**: 2021.02.23
+
+**Commit Delta**: [Change from 2.0.0 release](https://github.com/plus3it/terraform-aws-tardigrade-keystore/compare/2.0.0...3.0.0)
+
+**Summary**:
+
+*   Makes the keystore backends more "pluggable" by using dedicated objects for
+    attributes distinct to each backend type
+*   Modifies outputs to be maps of the key names to the keystore objects
+*   Adds DynamoDB as a supported keystore backend
+
+### 2.0.0
+
+**Released**: 2020.11.24
+
+**Commit Delta**: [Change from 1.0.5 release](https://github.com/plus3it/terraform-aws-tardigrade-keystore/compare/1.0.5...2.0.0)
+
+**Summary**:
+
+*   Removes module-wide "create" variable, relying on module-level `count` in terraform
+    0.13 for a better version of the same functionality
+
+### 1.0.5
+
+**Released**: 2020.10.15
+
+**Commit Delta**: [Change from 1.0.4 release](https://github.com/plus3it/terraform-aws-tardigrade-keystore/compare/1.0.4...1.0.5)
+
+**Summary**:
+
+*   Restores outputs to expected format
+
+### 1.0.4
+
+**Released**: 2020.10.14
+
+**Commit Delta**: [Change from 1.0.3 release](https://github.com/plus3it/terraform-aws-tardigrade-keystore/compare/1.0.3...1.0.4)
+
+**Summary**:
+
+*   Eliminates spurious diff on second apply due to null metadata
+
 ### 1.0.3
 
 **Released**: 2019.10.28
