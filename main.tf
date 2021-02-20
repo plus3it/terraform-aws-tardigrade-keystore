@@ -1,40 +1,50 @@
-locals {
-  # list of possible backend types support by the keystore module
-  backends = [
-    "s3",
-    "ssm",
-  ]
+resource "aws_dynamodb_table_item" "this" {
+  for_each = var.backend == "ddb" ? var.keys_and_values : {}
 
-  # test input backend provide by the users
-  is_backend_valid = contains(local.backends, var.backend)
-}
+  item = jsonencode({
+    Key   = { "S" : var.namespace == null ? each.key : "${var.namespace}/${each.key}" }
+    Value = { "S" : each.value }
+  })
 
-resource "null_resource" "is_backend_valid" {
-  # forces/outputs an error when var.backend is invalid
-  count = local.is_backend_valid ? 1 : 0
-
-  triggers = {
-    assert_is_valid = local.is_backend_valid == false ? file("ERROR: var.backend (${var.backend}) is invalid. Must be one of: ${join(", ", local.backends)}") : null
-  }
+  hash_key   = "Key"
+  table_name = var.backend_ddb.table_name
 }
 
 resource "aws_s3_bucket_object" "this" {
-  for_each = var.backend == "s3" ? var.key_value_map : {}
+  for_each = var.backend == "s3" ? var.keys_and_values : {}
 
-  bucket       = var.bucket_name
-  key          = each.key
-  content      = each.value
-  content_type = "application/json"
+  # S3 object keys *should not* start with the path separator ("/"), and should
+  # not contain multiple adjacent path separators, e.g. "//"
+  key = replace(
+    replace(
+      var.namespace == null ? each.key : "${var.namespace}/${each.key}",
+      "///*/",
+      "/",
+    ),
+    "/^//",
+    ""
+  )
+  content = each.value
+
+  bucket       = var.backend_s3.bucket_name
+  content_type = var.backend_s3.content_type
   etag         = md5(each.value)
   tags         = var.tags
 }
 
 resource "aws_ssm_parameter" "this" {
-  for_each = var.backend == "ssm" ? var.key_value_map : {}
+  for_each = var.backend == "ssm" ? var.keys_and_values : {}
 
-  type   = "SecureString"
-  name   = replace("/${var.bucket_name}/${each.key}", "////", "/", )
-  value  = each.value
-  key_id = var.kms_key_id
+  # When using paths, SSM parameters *should* start with the path separator ("/"),
+  # but SSM parameters should not have multiple adjacent path separators, e.g. "//"
+  name = replace(
+    var.namespace == null ? each.key : "/${var.namespace}/${each.key}",
+    "///*/",
+    "/",
+  )
+  value = each.value
+
+  type   = var.backend_ssm.type
+  key_id = var.backend_ssm.key_id
   tags   = var.tags
 }
