@@ -20,3 +20,6 @@ tardigrade-ci/
 
 # terratest
 tests/go.*
+
+# terraform lock file
+.terraform.lock.hcl
