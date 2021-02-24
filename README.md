@@ -8,30 +8,32 @@ Terraform module to create a keystore within S3/SSM
 
 | Name | Version |
 |------|---------|
-| terraform | >= 0.12 |
+| terraform | >= 0.13 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
 | aws | n/a |
-| null | n/a |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| backend | Specify which backend to store the keys and values: s3 or ssm | `string` | `"s3"` | no |
-| bucket\_name | Name of the keystore S3 bucket, must already exist. For SSM Parameter, bucket name will be used as prefix for the parameter names | `string` | `null` | no |
-| key\_value\_map | Map of keys and values | `map(string)` | `{}` | no |
-| kms\_key\_id | Specify the KMS key id or arn for encrypting SecureString. Only applicable for "ssm" backend | `string` | `""` | no |
-| tags | A map of tags to add to the keystore objects | `map(string)` | `{}` | no |
+| backend | Specify backend type for the keystore of keys and values: ddb, s3, or ssm | `string` | n/a | yes |
+| keys\_and\_values | Map of keys and values to manage in the keystore | `map(string)` | n/a | yes |
+| backend\_ddb | Configuration options for the ddb backend. Table must already exist, with Partition Key set to `Key`. Values will be added to the attribute `Value`. Required when `backend = "ddb"` | <pre>object({<br>    # Name of the DynamoDB table for the keystore<br>    table_name = string<br>  })</pre> | `null` | no |
+| backend\_s3 | Configuration options for the s3 backend. Bucket must already exist. Required when `backend = "s3"` | <pre>object({<br>    # Name of the S3 bucket for the keystore<br>    bucket_name = string<br>    # MIME content type for the S3 objects<br>    content_type = string<br>  })</pre> | `null` | no |
+| backend\_ssm | Configuration options for the ssm backend. Required when `backend = "ssm"` | <pre>object({<br>    # KMS Key ID used to encrypt the parameter, when `type = "SecureString"`<br>    key_id = string<br>    # Type of parameter to create<br>    type = string<br>  })</pre> | `null` | no |
+| namespace | Namespace used to prefix all keys in the keystore | `string` | `null` | no |
+| tags | A map of tags to add to all keystore objects | `map(string)` | `{}` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| bucket\_objects | List of bucket objects created by the keystore module |
-| ssm\_parameters | List of ssm parameter objects created by the keystore module |
+| ddb\_items | Map of ddb table item objects created by the keystore module |
+| s3\_objects | Map of S3 bucket objects created by the keystore module |
+| ssm\_parameters | Map of ssm parameter objects created by the keystore module |
 
 <!-- END TFDOCS -->
