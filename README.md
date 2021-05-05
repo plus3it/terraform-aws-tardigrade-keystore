@@ -9,12 +9,13 @@ Terraform module to create a keystore within S3/SSM
 | Name | Version |
 |------|---------|
 | terraform | >= 0.13 |
+| aws | >= 3.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| aws | n/a |
+| aws | >= 3.0 |
 
 ## Inputs
 

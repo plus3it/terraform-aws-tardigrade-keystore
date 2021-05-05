@@ -49,9 +49,11 @@ module "keystore_namespace" {
 }
 
 output "keystore" {
-  value = module.keystore
+  value     = module.keystore
+  sensitive = true
 }
 
 output "keystore_namespace" {
-  value = module.keystore_namespace
+  value     = module.keystore_namespace
+  sensitive = true
 }
