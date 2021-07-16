@@ -1,7 +1,3 @@
-provider "aws" {
-  region = "us-east-1"
-}
-
 resource "random_id" "this" {
   byte_length = 8
   prefix      = "tardigrade-keystore-"
