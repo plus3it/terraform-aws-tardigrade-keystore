@@ -6,12 +6,17 @@ updates:
     interval: daily
   open-pull-requests-limit: 10
 - package-ecosystem: terraform
-  directory: "/tests/create_ssm_keystore"
+  directory: "/tests/ssm"
   schedule:
     interval: daily
   open-pull-requests-limit: 10
 - package-ecosystem: terraform
-  directory: "/tests/create_s3_keystore"
+  directory: "/tests/s3"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
+- package-ecosystem: terraform
+  directory: "/tests/ddb"
   schedule:
     interval: daily
   open-pull-requests-limit: 10
