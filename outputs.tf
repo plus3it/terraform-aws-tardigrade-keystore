@@ -3,7 +3,7 @@ output "s3_objects" {
   # On initial apply, some attributes are null, causing diff on subsequent apply
   # Workaround: When attributes are null, force to an empty map
   value = var.backend == "s3" ? {
-    for key, object in aws_s3_bucket_object.this : key => merge(
+    for key, object in aws_s3_object.this : key => merge(
       object,
       {
         metadata = object.metadata == null ? {} : object.metadata
