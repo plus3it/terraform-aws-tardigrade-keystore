@@ -10,7 +10,7 @@ resource "aws_dynamodb_table_item" "this" {
   table_name = var.backend_ddb.table_name
 }
 
-resource "aws_s3_bucket_object" "this" {
+resource "aws_s3_object" "this" {
   for_each = var.backend == "s3" ? var.keys_and_values : {}
 
   # S3 object keys *should not* start with the path separator ("/"), and should
@@ -28,7 +28,7 @@ resource "aws_s3_bucket_object" "this" {
 
   bucket       = var.backend_s3.bucket_name
   content_type = var.backend_s3.content_type
-  etag         = md5(each.value)
+  source_hash  = md5(each.value)
   tags         = var.tags
 }
 
