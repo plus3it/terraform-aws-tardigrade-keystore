@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+### [5.0.0](https://github.com/plus3it/terraform-aws-tardigrade-keystore/releases/tag/5.0.0)
+
+**Released**: 2023.03.20
+
+**Summary**:
+
+*   Uses postcondition to create a plan-time failure when s3 object tags exceed limit
+
 ### 4.0.0
 
 **Released**: 2022.08.24
