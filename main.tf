@@ -30,6 +30,13 @@ resource "aws_s3_object" "this" {
   content_type = var.backend_s3.content_type
   source_hash  = md5(each.value)
   tags         = var.tags
+
+  lifecycle {
+    postcondition {
+      condition     = length(self.tags_all) <= 10
+      error_message = "Cannot have more than 10 tags since that is the max for s3 objects, including provider default_tags. Received ${length(self.tags_all)} tags."
+    }
+  }
 }
 
 resource "aws_ssm_parameter" "this" {
